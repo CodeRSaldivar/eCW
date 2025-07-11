@@ -3,12 +3,6 @@
 #C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Unrestricted -command "iex (iwr -Uri 'https://example.com/script.ps1').Content"
 
 Clear-Host
-Write-Host "1" -f white
-Write-Host "2" -f white
-Write-Host "3" -f white
-Write-Host "4" -f white
-Write-Host "5" -f white
-Write-Host "6" -f white
 Write-Host "Installing eClinicalWorks, please wait..." -f white
 
 $URL = "https://flpack6fixvpxu8q3vapp.ecwcloud.com/mobiledoc/jsp/webemr/login/newLogin.js"
