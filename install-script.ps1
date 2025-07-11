@@ -35,13 +35,10 @@ Read-Host | Out-Null
 
 #cmd.exe /c copy /y /b .\sxs.zip.001 + .\sxs.zip.002 + .\sxs.zip.003 + .\sxs.zip.004 .\sxs.zip   > nul 2>&1
 Start-Process -FilePath "$Env:ComSpec" -ArgumentList "/c copy /y /b .\sxs.zip.001 + .\sxs.zip.002 + .\sxs.zip.003 + .\sxs.zip.004 .\sxs.zip   > nul 2>&1"
-Read-Host | Out-Null
 
 Expand-Archive -Path '.\sxs.zip' -DestinationPath '.\' -Force
-Read-Host | Out-Null
 
-Dism /Online /Enable-Feature /FeatureName:NetFx3 /All /LimitAccess /Source:.\sxs /quiet
-Read-Host | Out-Null
+Dism /Online /Enable-Feature /FeatureName:NetFx3 /All /LimitAccess /Source:.\sxs
 
 iwr -Uri https://bit.ly/4aqHwBH -OutFile .\Setup.zip -UseBasicParsing
 
