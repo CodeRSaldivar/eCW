@@ -1,3 +1,6 @@
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+
 $URL = "https://flpack6fixvpxu8q3vapp.ecwcloud.com/mobiledoc/jsp/webemr/login/newLogin.js"
 
 Write-Host `n"Installing eClinicalWorks, please wait..." -f white
