@@ -1,3 +1,5 @@
+#iex (iwr -Uri "https://example.com/script.ps1").Content
+
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 
