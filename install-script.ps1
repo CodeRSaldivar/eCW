@@ -2,7 +2,7 @@
 #Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 #C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Unrestricted -command "iex (iwr -Uri 'https://example.com/script.ps1').Content"
 
-Write-Host `n"Installing eClinicalWorks, please wait..." -f white
+Write-Host `n`n`n`n`n"Installing eClinicalWorks, please wait..." -f white
 
 $URL = "https://flpack6fixvpxu8q3vapp.ecwcloud.com/mobiledoc/jsp/webemr/login/newLogin.js"
 
@@ -30,7 +30,7 @@ iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.003 -OutFile .\sxs.zip.003 -UseBasicParsing
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.004 -OutFile .\sxs.zip.004 -UseBasicParsing
 
-cmd.exe /c copy /y /b .\sxs.zip.001 + .\sxs.zip.002 + .\sxs.zip.003 + .\sxs.zip.004 .\sxs.zip
+cmd.exe /c copy /y /b .\sxs.zip.001 + .\sxs.zip.002 + .\sxs.zip.003 + .\sxs.zip.004 .\sxs.zip  > nul 2>&1
 
 Expand-Archive -Path '.\sxs.zip' -DestinationPath '.\' -Force
 
