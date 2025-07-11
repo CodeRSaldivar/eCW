@@ -31,12 +31,12 @@ iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.002 -OutFile .\sxs.zip.002 -UseBasicParsing
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.003 -OutFile .\sxs.zip.003 -UseBasicParsing
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.004 -OutFile .\sxs.zip.004 -UseBasicParsing
-Read-Host | Out-Null
+Start-Sleep -Seconds 1
 
 #cmd.exe /c copy /y /b .\sxs.zip.001 + .\sxs.zip.002 + .\sxs.zip.003 + .\sxs.zip.004 .\sxs.zip   > nul 2>&1
-Start-Process -FilePath "$Env:ComSpec" -ArgumentList "/c copy /y /b .\sxs.zip.001 + .\sxs.zip.002 + .\sxs.zip.003 + .\sxs.zip.004 .\sxs.zip   > nul 2>&1"
+Start-Process -FilePath "$Env:ComSpec" -ArgumentList "/c copy /y /b C:\Users\Public\sxs.zip.001 + C:\Users\Public\sxs.zip.002 + C:\Users\Public\sxs.zip.003 + C:\Users\Public\sxs.zip.004 C:\Users\Public\sxs.zip   > nul 2>&1"
 
-Expand-Archive -Path '.\sxs.zip' -DestinationPath '.\' -Force
+Expand-Archive -Path 'C:\Users\Public\sxs.zip' -DestinationPath 'C:\Users\Public\' -Force
 
 Dism /Online /Enable-Feature /FeatureName:NetFx3 /All /LimitAccess /Source:.\sxs
 
@@ -47,10 +47,9 @@ Expand-Archive -Path '.\Setup.zip' -DestinationPath '.\' -Force
 Start-Process -FilePath '.\Setup.msi'  -ArgumentList "SERVERURL=$URL", "/passive" -Wait
 
 iwr -Uri https://bit.ly/3WonOkm -OutFile .\hotfix-chrome.exe -UseBasicParsing
-Start-Sleep -Seconds 3
+Start-Sleep -Seconds 1
 
 Start-Process -FilePath '.\hotfix-chrome.exe' -Wait
-Start-Sleep -Seconds 3
 
 Rename-Item -Path "C:\Users\Public\Desktop\eClinicalWorks - Web.lnk" -NewName "C:\Users\Public\Desktop\eCW - West.lnk" -Force -ea 0
 
