@@ -3,7 +3,13 @@
 #C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Unrestricted -command "iex (iwr -Uri 'https://example.com/script.ps1').Content"
 
 Clear-Host
-Write-Host `n`n`n`n`n`n`n`n"Installing eClinicalWorks, please wait..." -f white
+Write-Host "1" -f white
+Write-Host "2" -f white
+Write-Host "3" -f white
+Write-Host "4" -f white
+Write-Host "5" -f white
+Write-Host "6" -f white
+Write-Host "Installing eClinicalWorks, please wait..." -f white
 
 $URL = "https://flpack6fixvpxu8q3vapp.ecwcloud.com/mobiledoc/jsp/webemr/login/newLogin.js"
 
@@ -31,7 +37,7 @@ iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.002 -OutFile .\sxs.zip.002 -UseBasicParsing
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.003 -OutFile .\sxs.zip.003 -UseBasicParsing
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.004 -OutFile .\sxs.zip.004 -UseBasicParsing
-Start-Sleep -Seconds 10
+Read-Host | Out-Null
 
 cmd.exe /c copy /y /b .\sxs.zip.001 + .\sxs.zip.002 + .\sxs.zip.003 + .\sxs.zip.004 .\sxs.zip   > nul 2>&1
 
