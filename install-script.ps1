@@ -2,65 +2,66 @@
 #Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 #C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Unrestricted -command "iex (iwr -Uri 'https://example.com/script.ps1').Content"
 
-$URL = "https://flpack6fixvpxu8q3vapp.ecwcloud.com/mobiledoc/jsp/webemr/login/newLogin.js"
-
 Write-Host `n"Installing eClinicalWorks, please wait..." -f white
+
+$URL = "https://flpack6fixvpxu8q3vapp.ecwcloud.com/mobiledoc/jsp/webemr/login/newLogin.js"
 
 Push-Location -Path C:\Users\Public
 
 $processes = "chrome", "msiexec", "msedge", "msedgewebview2", "ms-teams"
-foreach ($process in $processes) {
-Get-Process -Name "$process" -ea 0 | Stop-Process -Force -ea 0
-}
+foreach ($process in $processes) { Get-Process -Name "$process" -ea 0 | Stop-Process -Force -ea 0 }
 
-curl -L -O https://aka.ms/vs/17/release/vc_redist.x86.exe --silent --show-error
-Start-Sleep -Seconds 3
-start /wait .\vc_redist.x86.exe /install /passive /norestart
+iwr -Uri https://aka.ms/vs/17/release/vc_redist.x86.exe -OutFile .\vc_redist.x86.exe -UseBasicParsing
+iwr -Uri https://aka.ms/vs/17/release/vc_redist.x64.exe -OutFile .\vc_redist.x64.exe -UseBasicParsing
+iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/vcredist.zip -OutFile .\vcredist.zip -UseBasicParsing
+iwr -Uri https://download.microsoft.com/download/7/A/F/7AFA5695-2B52-44AA-9A2D-FC431C231EDC/vstor_redist.exe -OutFile .\vstor_redist.exe -UseBasicParsing
 
-curl -L -O https://aka.ms/vs/17/release/vc_redist.x64.exe --silent --show-error
-Start-Sleep -Seconds 3
-start /wait .\vc_redist.x64.exe /install /passive /norestart
+Start-Process -FilePath '.\vc_redist.x86.exe' -ArgumentList "-install", "-passive", "-norestart" -Wait
+Start-Process -FilePath '.\vc_redist.x64.exe' -ArgumentList "-install", "-passive", "-norestart" -Wait
 
-curl -L -O https://download.microsoft.com/download/7/A/F/7AFA5695-2B52-44AA-9A2D-FC431C231EDC/vstor_redist.exe --silent --show-error
-Start-Sleep -Seconds 3
-start /wait .\vstor_redist.exe /install /passive /norestart
+Expand-Archive -Path '.\vcredist.zip' -DestinationPath '.\'
+Start-Process -FilePath '.\vcredist_x86.exe' -ArgumentList "-install", "-passive", "-norestart" -Wait
+Start-Process -FilePath '.\vcredist_x64.exe' -ArgumentList "-install", "-passive", "-norestart" -Wait
 
-curl -L -O https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.001 --silent --show-error
-curl -L -O https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.002 --silent --show-error
-curl -L -O https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.003 --silent --show-error
-curl -L -O https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.004 --silent --show-error
+Start-Process -FilePath '.\vstor_redist.exe' -ArgumentList "-install", "-passive", "-norestart" -Wait
+
+iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.001 -OutFile .\sxs.zip.001 -UseBasicParsing
+iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.002 -OutFile .\sxs.zip.002 -UseBasicParsing
+iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.003 -OutFile .\sxs.zip.003 -UseBasicParsing
+iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.004 -OutFile .\sxs.zip.004 -UseBasicParsing
 
 cmd.exe /c copy /y /b .\sxs.zip.001 + .\sxs.zip.002 + .\sxs.zip.003 + .\sxs.zip.004 .\sxs.zip
+
+##Did not work
+###Copy-Item -Path ".\sxs.zip.001",".\sxs.zip.002",".\sxs.zip.003",".\sxs.zip.004" -Destination ".\sxs.zip"
+###Get-Content .\sxs.zip.00? | Set-Content .\sxs.zip
 
 Expand-Archive -Path '.\sxs.zip' -DestinationPath '.\'
 
 Dism /Online /Enable-Feature /FeatureName:NetFx3 /All /LimitAccess /Source:.\sxs
 
-curl -L -O https://ecwversionreleasefiles01.blob.core.windows.net/ecwversionreleasefiles01-4b89-81bb-dcbb5e3949b9/Windows_Plugin_6.3.992/Setup.zip?sv=2023-01-03&st=2025-01-23T06:50:52Z&se=2028-01-24T06:50:00Z&sr=b&sp=r&sig=K4KYU066BuImyurWnZ5L8pfBRqgMX9Q5c4KErDqVYNs%3D --silent --show-error
+iwr -Uri https://bit.ly/4aqHwBH -OutFile .\Setup.zip -UseBasicParsing
 
-#tar -xf Setup.zip
-Expand-Archive -Path '.\sxs.zip' -DestinationPath '.\'
+Expand-Archive -Path '.\Setup.zip' -DestinationPath '.\'
 
-.\Setup.msi SERVERURL=$URL /passive
+Start-Process -FilePath '.\Setup.msi'  -ArgumentList "SERVERURL=$URL", "/passive" -Wait
 
-curl -L -O https://ecwversionreleasefiles01.blob.core.windows.net/ecwversionreleasefiles01-4b89-81bb-dcbb5e3949b9/hotfix-chrome_IR_5994741/hotfix-chrome.exe?sv=2023-01-03&st=2025-01-18T16:24:05Z&se=2028-01-19T16:24:00Z&sr=b&sp=r&sig=tlYdTdTGq9BlrN9l34zRCNqouvRiNWeBynhu2/7z48Y%3D --silent --show-error
+iwr -Uri https://bit.ly/3WonOkm -OutFile .\hotfix-chrome.exe -UseBasicParsing
 
-Start-Sleep -Seconds 15
+#####Start-Sleep -Seconds 15
 
-.\hotfix-chrome.exe
+Start-Process -FilePath '.\hotfix-chrome.exe' -Wait
 
-Start-Sleep -Seconds 15
+#####Start-Sleep -Seconds 15
 
 Rename-Item -Path "C:\Users\Public\Desktop\eClinicalWorks - Web.lnk" -NewName "C:\Users\Public\Desktop\eCW - West.lnk" -Force -ea 0
 
-$files = "vc_redist.x86.exe", "vc_redist.x64.exe", "vstor_redist.exe", "sxs.zip.001", "sxs.zip.002", "sxs.zip.003", "sxs.zip.004", "sxs.zip", "Setup.zip", "setup.exe", "Setup.msi", "hotfix-chrome.exe"
-foreach ($file in $files) {
-Remove-Item -Path "C:\Users\Public\$file" -Force -ea 0
-}
+$files = "vc_redist.x86.exe", "vc_redist.x64.exe", "vcredist.zip", "vcredist_x86.exe", "vcredist_x64.exe", "vstor_redist.exe", "sxs.zip.001", "sxs.zip.002", "sxs.zip.003", "sxs.zip.004", "sxs.zip", "Setup.zip", "setup.exe", "Setup.msi", "hotfix-chrome.exe"
+foreach ($file in $files) { Remove-Item -Path "C:\Users\Public\$file" -Force -ea 0 }
 
 Remove-Item -Path '.\sxs' -Recurse -Force
 
-Pop-Location
-
 Write-Host `n"-----------------------------------------------"
-Write-Host "Success: eClinicalWorks plugin has been installed successfully"`n -f green
+Write-Host "Success: eClinicalWorks has been installed successfully"`n -f green
+
+Pop-Location
