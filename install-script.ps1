@@ -26,10 +26,14 @@ Start-Process -FilePath '.\vcredist_x64.exe' -ArgumentList "-install", "-passive
 
 Start-Process -FilePath '.\vstor_redist.exe' -ArgumentList "-install", "-passive", "-norestart" -Wait
 
+Read-Host | Out-Null
+
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.001 -OutFile .\sxs.zip.001 -UseBasicParsing
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.002 -OutFile .\sxs.zip.002 -UseBasicParsing
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.003 -OutFile .\sxs.zip.003 -UseBasicParsing
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.004 -OutFile .\sxs.zip.004 -UseBasicParsing
+
+Read-Host | Out-Null
 
 cmd.exe /c copy /y /b .\sxs.zip.001 + .\sxs.zip.002 + .\sxs.zip.003 + .\sxs.zip.004 .\sxs.zip
 
