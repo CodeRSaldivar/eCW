@@ -2,6 +2,7 @@
 #Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 #C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Unrestricted -command "iex (iwr -Uri 'https://example.com/script.ps1').Content"
 
+Clear-Host
 Write-Host `n`n`n`n"Installing eClinicalWorks, please wait..." -f white
 
 $URL = "https://flpack6fixvpxu8q3vapp.ecwcloud.com/mobiledoc/jsp/webemr/login/newLogin.js"
