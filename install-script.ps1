@@ -1,7 +1,6 @@
-#iex (iwr -Uri "https://example.com/script.ps1").Content
-
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+#[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+#Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+#C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Unrestricted -command "iex (iwr -Uri 'https://example.com/script.ps1').Content"
 
 $URL = "https://flpack6fixvpxu8q3vapp.ecwcloud.com/mobiledoc/jsp/webemr/login/newLogin.js"
 
