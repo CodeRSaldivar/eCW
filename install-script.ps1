@@ -19,7 +19,7 @@ iwr -Uri https://download.microsoft.com/download/7/A/F/7AFA5695-2B52-44AA-9A2D-F
 Start-Process -FilePath '.\vc_redist.x86.exe' -ArgumentList "-install", "-passive", "-norestart" -Wait
 Start-Process -FilePath '.\vc_redist.x64.exe' -ArgumentList "-install", "-passive", "-norestart" -Wait
 
-Expand-Archive -Path '.\vcredist.zip' -DestinationPath '.\'
+Expand-Archive -Path '.\vcredist.zip' -DestinationPath '.\' -Force
 Start-Process -FilePath '.\vcredist_x86.exe' -ArgumentList "-install", "-passive", "-norestart" -Wait
 Start-Process -FilePath '.\vcredist_x64.exe' -ArgumentList "-install", "-passive", "-norestart" -Wait
 
@@ -32,7 +32,7 @@ iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs
 
 cmd.exe /c copy /y /b .\sxs.zip.001 + .\sxs.zip.002 + .\sxs.zip.003 + .\sxs.zip.004 .\sxs.zip
 
-Expand-Archive -Path '.\sxs.zip' -DestinationPath '.\'
+Expand-Archive -Path '.\sxs.zip' -DestinationPath '.\' -Force
 
 Dism /Online /Enable-Feature /FeatureName:NetFx3 /All /LimitAccess /Source:.\sxs /quiet
 
