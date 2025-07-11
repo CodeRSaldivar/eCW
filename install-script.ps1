@@ -38,7 +38,7 @@ Dism /Online /Enable-Feature /FeatureName:NetFx3 /All /LimitAccess /Source:.\sxs
 
 iwr -Uri https://bit.ly/4aqHwBH -OutFile .\Setup.zip -UseBasicParsing
 
-Expand-Archive -Path '.\Setup.zip' -DestinationPath '.\'
+Expand-Archive -Path '.\Setup.zip' -DestinationPath '.\' -Force
 
 Start-Process -FilePath '.\Setup.msi'  -ArgumentList "SERVERURL=$URL", "/passive" -Wait
 
