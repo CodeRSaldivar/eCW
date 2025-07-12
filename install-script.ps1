@@ -17,17 +17,7 @@ iwr -Uri https://aka.ms/vs/17/release/vc_redist.x64.exe -OutFile .\vc_redist.x64
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/vcredist.zip -OutFile .\vcredist.zip -UseBasicParsing
 iwr -Uri https://download.microsoft.com/download/7/A/F/7AFA5695-2B52-44AA-9A2D-FC431C231EDC/vstor_redist.exe -OutFile .\vstor_redist.exe -UseBasicParsing
 
-iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.001 -OutFile .\sxs.zip.001 -UseBasicParsing
-iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.002 -OutFile .\sxs.zip.002 -UseBasicParsing
-iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.003 -OutFile .\sxs.zip.003 -UseBasicParsing
-iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.004 -OutFile .\sxs.zip.004 -UseBasicParsing
-
-iwr -Uri https://bit.ly/4aqHwBH -OutFile .\Setup.zip -UseBasicParsing
-iwr -Uri https://bit.ly/3WonOkm -OutFile .\hotfix-chrome.exe -UseBasicParsing
-
 Expand-Archive -Path '.\vcredist.zip' -DestinationPath '.\' -Force
-Expand-Archive -Path '.\sxs.zip' -DestinationPath '.\' -Force
-Expand-Archive -Path '.\Setup.zip' -DestinationPath '.\' -Force
 
 Start-Process -FilePath '.\vc_redist.x86.exe' -ArgumentList "-install", "-passive", "-norestart" -Wait
 Start-Process -FilePath '.\vc_redist.x64.exe' -ArgumentList "-install", "-passive", "-norestart" -Wait
@@ -37,11 +27,24 @@ Start-Process -FilePath '.\vcredist_x64.exe' -ArgumentList "-install", "-passive
 
 Start-Process -FilePath '.\vstor_redist.exe' -ArgumentList "-install", "-passive", "-norestart" -Wait
 
+iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.001 -OutFile .\sxs.zip.001 -UseBasicParsing
+iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.002 -OutFile .\sxs.zip.002 -UseBasicParsing
+iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.003 -OutFile .\sxs.zip.003 -UseBasicParsing
+iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.004 -OutFile .\sxs.zip.004 -UseBasicParsing
+
+Expand-Archive -Path '.\sxs.zip' -DestinationPath '.\' -Force
+
 Start-Process -FilePath "$Env:ComSpec" -ArgumentList "/c copy /y /b C:\Users\Public\sxs.zip.001 + C:\Users\Public\sxs.zip.002 + C:\Users\Public\sxs.zip.003 + C:\Users\Public\sxs.zip.004 C:\Users\Public\sxs.zip"
 
 Dism /Online /Enable-Feature /FeatureName:NetFx3 /All /LimitAccess /Source:.\sxs
 
+iwr -Uri https://bit.ly/4aqHwBH -OutFile .\Setup.zip -UseBasicParsing
+
+Expand-Archive -Path '.\Setup.zip' -DestinationPath '.\' -Force
+
 Start-Process -FilePath '.\Setup.msi'  -ArgumentList "SERVERURL=$URL", "/passive" -Wait
+
+iwr -Uri https://bit.ly/3WonOkm -OutFile .\hotfix-chrome.exe -UseBasicParsing
 
 Start-Process -FilePath '.\hotfix-chrome.exe' -Wait
 
