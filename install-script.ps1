@@ -40,6 +40,7 @@ Expand-Archive -Path '.\sxs.zip' -DestinationPath '.\' -Force
 Start-Sleep -Seconds 1
 
 Dism /Online /Enable-Feature /FeatureName:NetFx3 /All /LimitAccess /Source:.\sxs
+Write-Host `n"Downloading installer, please wait..." -f white
 
 iwr -Uri https://bit.ly/4aqHwBH -OutFile .\Setup.zip -UseBasicParsing
 Start-Sleep -Seconds 1
