@@ -38,7 +38,7 @@ Expand-Archive -Path '.\sxs.zip' -DestinationPath '.\' -Force
 Start-Sleep -Seconds 3
 
 Dism /Online /Enable-Feature /FeatureName:NetFx3 /All /LimitAccess /Source:.\sxs
-Write-Host `n"Downloading installer, please wait..." -f white
+Write-Host `n"Downloading installer (356000000 bytes to be written), please wait..." -f white
 
 iwr -Uri https://bit.ly/4aqHwBH -OutFile .\Setup.zip -UseBasicParsing
 Start-Sleep -Seconds 3
@@ -61,6 +61,6 @@ foreach ($file in $files) { Remove-Item -Path "C:\Users\Public\$file" -Force -ea
 Remove-Item -Path '.\sxs' -Recurse -Force
 
 Write-Host `n"-----------------------------------------------"
-Write-Host "Success: eClinicalWorks has been installed successfully"`n -f green
+Write-Host "Success: eClinicalWorks has been installed successfully" -f green
 
 Pop-Location
