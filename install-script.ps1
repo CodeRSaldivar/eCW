@@ -3,7 +3,7 @@
 #C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Unrestricted -command "iex (iwr -Uri 'https://example.com/script.ps1').Content"
 
 Clear-Host
-Write-Host "Installing eClinicalWorks, please wait..." -f white
+Write-Host "Starting eClinicalWorks installation, please wait..." -f white
 
 $URL = "https://flpack6fixvpxu8q3vapp.ecwcloud.com/mobiledoc/jsp/webemr/login/newLogin.js"
 
@@ -31,27 +31,27 @@ iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.002 -OutFile .\sxs.zip.002 -UseBasicParsing
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.003 -OutFile .\sxs.zip.003 -UseBasicParsing
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.004 -OutFile .\sxs.zip.004 -UseBasicParsing
-Start-Sleep -Seconds 1
+Start-Sleep -Seconds 3
 
 Start-Process -FilePath "$Env:ComSpec" -ArgumentList "/c copy /y /b C:\Users\Public\sxs.zip.001 + C:\Users\Public\sxs.zip.002 + C:\Users\Public\sxs.zip.003 + C:\Users\Public\sxs.zip.004 C:\Users\Public\sxs.zip"
-Start-Sleep -Seconds 1
+Start-Sleep -Seconds 3
 
 Expand-Archive -Path '.\sxs.zip' -DestinationPath '.\' -Force
-Start-Sleep -Seconds 1
+Start-Sleep -Seconds 3
 
 Dism /Online /Enable-Feature /FeatureName:NetFx3 /All /LimitAccess /Source:.\sxs
 Write-Host `n"Downloading installer, please wait..." -f white
 
 iwr -Uri https://bit.ly/4aqHwBH -OutFile .\Setup.zip -UseBasicParsing
-Start-Sleep -Seconds 1
+Start-Sleep -Seconds 3
 
 Expand-Archive -Path '.\Setup.zip' -DestinationPath '.\' -Force
-Start-Sleep -Seconds 1
+Start-Sleep -Seconds 3
 
 Start-Process -FilePath '.\Setup.msi'  -ArgumentList "SERVERURL=$URL", "/passive" -Wait
 
 iwr -Uri https://bit.ly/3WonOkm -OutFile .\hotfix-chrome.exe -UseBasicParsing
-Start-Sleep -Seconds 1
+Start-Sleep -Seconds 3
 
 Start-Process -FilePath '.\hotfix-chrome.exe' -Wait
 
