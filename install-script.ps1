@@ -1,6 +1,4 @@
-#[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-#Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
-#C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Unrestricted -command "iex (iwr -Uri 'https://example.com/script.ps1').Content"
+#powershell -command iex(iwr -uri https://example.com/script.ps1).content
 
 Clear-Host
 Write-Host "Starting eClinicalWorks installation, please wait..." -f white
