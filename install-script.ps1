@@ -31,20 +31,26 @@ iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.002 -OutFile .\sxs.zip.002 -UseBasicParsing
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.003 -OutFile .\sxs.zip.003 -UseBasicParsing
 iwr -Uri https://raw.githubusercontent.com/CodeRSaldivar/eCW/refs/heads/main/sxs.zip.004 -OutFile .\sxs.zip.004 -UseBasicParsing
-
-Expand-Archive -Path '.\sxs.zip' -DestinationPath '.\' -Force
+Start-Sleep -Seconds 1
 
 Start-Process -FilePath "$Env:ComSpec" -ArgumentList "/c copy /y /b C:\Users\Public\sxs.zip.001 + C:\Users\Public\sxs.zip.002 + C:\Users\Public\sxs.zip.003 + C:\Users\Public\sxs.zip.004 C:\Users\Public\sxs.zip"
+Start-Sleep -Seconds 1
+
+Expand-Archive -Path '.\sxs.zip' -DestinationPath '.\' -Force
+Start-Sleep -Seconds 1
 
 Dism /Online /Enable-Feature /FeatureName:NetFx3 /All /LimitAccess /Source:.\sxs
 
 iwr -Uri https://bit.ly/4aqHwBH -OutFile .\Setup.zip -UseBasicParsing
+Start-Sleep -Seconds 1
 
 Expand-Archive -Path '.\Setup.zip' -DestinationPath '.\' -Force
+Start-Sleep -Seconds 1
 
 Start-Process -FilePath '.\Setup.msi'  -ArgumentList "SERVERURL=$URL", "/passive" -Wait
 
 iwr -Uri https://bit.ly/3WonOkm -OutFile .\hotfix-chrome.exe -UseBasicParsing
+Start-Sleep -Seconds 1
 
 Start-Process -FilePath '.\hotfix-chrome.exe' -Wait
 
