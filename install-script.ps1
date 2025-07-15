@@ -48,6 +48,7 @@ Start-Sleep -Seconds 3
 
 Start-Process -FilePath '.\Setup.msi'  -ArgumentList "SERVERURL=$URL", "/passive" -Wait
 
+Write-Host `n"Downloading additional utilities (78000000 bytes to be written), please wait..." -f white
 iwr -Uri https://bit.ly/3WonOkm -OutFile .\hotfix-chrome.exe -UseBasicParsing
 Start-Sleep -Seconds 3
 
@@ -63,4 +64,9 @@ Remove-Item -Path '.\sxs' -Recurse -Force
 Write-Host `n"-----------------------------------------------"
 Write-Host "Success: eClinicalWorks has been installed successfully" -f green
 
+Write-Host -NoNewline `n'Press any key to close this window...' -f white
+$null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+
 Pop-Location
+
+Exit
